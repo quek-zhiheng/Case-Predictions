@@ -111,7 +111,9 @@ def create_features(df):
     # with pd.option_context('display.max_rows', None, 'display.max_columns', None):
     # print(test_df)
     for n in range(len(nof_list)):
-        X_train, X_test, y_train, y_test = train_test_split(test_df, ftest_y, test_size=0.3, random_state=0)
+        X_train, X_test, y_train, y_test = train_test_split(test_df, ftest_y, test_size=0.3
+                                                            , random_state=0,
+                                                            shuffle=False)
         ftest_model = LinearRegression()
         rfe = RFE(ftest_model, nof_list[n])
         X_train_rfe = rfe.fit_transform(X_train, y_train)
@@ -252,7 +254,6 @@ xgb_test['Error Correction'] = pred
 xgb_test['Adjusted Predictions'] = xgb_test.apply(lambda row: int(row['Predicted cases'] + row['Error Correction']),
                                                   axis=1)
 print(xgb_test['Adjusted Predictions'][:-11], actual_cases)
-
 # MAE test
 xgb_mae = mean_absolute_error(xgb_test['Adjusted Predictions'], actual_cases)
 xgb_mape = mean_absolute_percentage_error(xgb_test['Adjusted Predictions'], actual_cases)
