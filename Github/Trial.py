@@ -101,7 +101,7 @@ def create_features(df):
     df['temperature 30 day min'] = df.apply(lambda row: day_min(int(row.name), 30, 'Temperature'), axis=1)
     df['sti 30 day std'] = df.apply(lambda row: day_std(int(row.name), 30, 'sti'), axis=1)
 
-    # check feature importance
+    # check feature importance (this portion is buggy, may want to readjust things below)
     test_df = df.copy()
     ftest_y = test_df['ITK']
     test_df = test_df.drop([eval_selector, 'Date'], axis=1)
@@ -254,6 +254,7 @@ xgb_test['Error Correction'] = pred
 xgb_test['Adjusted Predictions'] = xgb_test.apply(lambda row: int(row['Predicted cases'] + row['Error Correction']),
                                                   axis=1)
 print(xgb_test['Adjusted Predictions'][:-11], actual_cases)
+
 # MAE test
 xgb_mae = mean_absolute_error(xgb_test['Adjusted Predictions'], actual_cases)
 xgb_mape = mean_absolute_percentage_error(xgb_test['Adjusted Predictions'], actual_cases)
@@ -262,3 +263,5 @@ xgb_rsme = mean_squared_error(xgb_test['Adjusted Predictions'], actual_cases, sq
 print("After XGB Mean Absolute Error: ", xgb_mae)
 print("After XGB Mean Absolute Percentage Error: ", xgb_mape)
 print("After XGB R-Squared Mean Error: ", xgb_rsme)
+
+# can include additional code to export results to csv

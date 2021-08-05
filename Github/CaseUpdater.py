@@ -215,12 +215,10 @@ def retrieve(date, column):
         else:
             return retrieve(date-timedelta(days=1), column)
 
-
+#creating new datafrane to write into csv
 new_rows = pd.DataFrame()
 new_rows['Date'] = dates_for_update
 new_rows['ITK'] = 0
-new_rows['sti'] = new_rows.apply(lambda row: retrieve(row['Date'], 'STI'), axis=1)
+new_rows['sti'] = new_rows.apply(lambda row: retrieve(row['Date'], 'STI'), axis=1) # bug: recursion not done properly
 print(new_rows['sti'])
 
-
-# def and implement function to use last data point if NaN (copy and paste below later when collating data)
