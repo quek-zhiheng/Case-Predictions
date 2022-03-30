@@ -11,7 +11,7 @@ from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.api import VAR
 from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_absolute_percentage_error
 from xgboost import XGBRegressor
-import matplotlib
+import matplotlib.pyplot as mpl
 
 
 eval_selector = input('Intake(ITK) or Intervention(ITV)? Please key in 3 letter code: ').upper()
